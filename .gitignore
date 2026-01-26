@@ -1,0 +1,13 @@
+# Binaries
+crudapi
+*.exe
+
+# Go workspace file
+go.work
+
+# Environment variables
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
