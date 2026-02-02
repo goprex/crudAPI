@@ -42,7 +42,7 @@ Aplikasi ini menggunakan relasi One-to-Many antara Kategori dan Produk. Jalankan
 
 2. Tabel Produk dengan Foreign Key ke Kategori
     ```bash
-        CREATE TABLE products (
+      CREATE TABLE products (
             id SERIAL PRIMARY KEY,
             name VARCHAR(255) NOT NULL,
             price NUMERIC(15, 2) NOT NULL,
