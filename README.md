@@ -24,11 +24,11 @@ Pastikan alat berikut sudah terinstal di komputer Anda:
   ```bash
   go install [github.com/swaggo/swag/cmd/swag@latest](https://github.com/swaggo/swag/cmd/swag@latest)
 
-🗄️ Langkah 2: Setup Database (Supabase)
+## 🗄️ Langkah 2: Setup Database (Supabase)
 
 Jalankan script SQL berikut di SQL Editor Supabase Anda untuk membuat tabel dengan relasi:
 SQL
-
+```bash
 -- 1. Tabel Kategori
 CREATE TABLE categories (
     id SERIAL PRIMARY KEY,
@@ -36,6 +36,7 @@ CREATE TABLE categories (
 );
 
 -- 2. Tabel Produk dengan Foreign Key
+```bash
 CREATE TABLE products (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -45,35 +46,32 @@ CREATE TABLE products (
 );
 
 -- 3. Masukkan Data Contoh
+```bash
 INSERT INTO categories (name) VALUES ('Elektronik'), ('Makanan');
 
 ## 🚀 Langkah 3: Menjalankan di Lokal
 
-    Clone & Install:
-    Bash
-
+1. Clone & Install:
+```bash
     git clone [https://github.com/goprex/crudAPI.git](https://github.com/goprex/crudAPI.git)
     cd crudAPI
     go mod tidy
 
-    Setup Environment: Buat file .env di root folder dan isi dengan link URI Supabase Anda:
-    Code snippet
-
+2. Setup Environment: Buat file .env di root folder dan isi dengan link URI Supabase Anda:
+```bash
     PORT=8080
     DB_CONN=postgres://postgres:[PASSWORD]@db.supabase.co:5432/postgres
 
-    Generate Swagger & Run:
-    Bash
-
+3. Generate Swagger & Run:
+```bash
     swag init
     go run main.go
 
-## 📖 Testing API (CURL)
+## 📖 Langkah 4: Testing API (CURL)
 
 Gunakan perintah ini di terminal (Arch/Linux/Mac) untuk menguji API:
 1. Tambah Produk Baru (POST)
-Bash
-
+```bash
 curl -X POST http://localhost:8080/api/produk \
      -H "Content-Type: application/json" \
      -d '{
@@ -84,7 +82,6 @@ curl -X POST http://localhost:8080/api/produk \
          }'
 
 2. Update Produk (PUT)
-Bash
 ```bash
 curl -X PUT http://localhost:8080/api/produk/1 \
      -H "Content-Type: application/json" \
@@ -96,11 +93,10 @@ curl -X PUT http://localhost:8080/api/produk/1 \
          }'
 
 3. Hapus Produk (DELETE)
-Bash
-
+```bash
 curl -X DELETE http://localhost:8080/api/produk/1
 
-📂 Struktur Folder
+## 📂 Struktur Folder
 
     handlers/ - Kontroler HTTP.
 
