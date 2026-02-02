@@ -11,6 +11,8 @@ import (
 	"crudapi/handlers"
 	"crudapi/repositories"
 	"crudapi/services"
+	_ "crudapi/docs" 
+    	httpSwagger "github.com/swaggo/http-swagger"
 
 	"github.com/spf13/viper"
 )
