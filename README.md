@@ -47,7 +47,8 @@ SQL
         category_id INTEGER REFERENCES categories(id) ON DELETE SET NULL
     );
 
---
+---
+
 * **Masukkan Data Contoh**
 
     INSERT INTO categories (name) VALUES ('Elektronik'), ('Makanan');
