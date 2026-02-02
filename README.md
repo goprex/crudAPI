@@ -2,6 +2,8 @@
 
 API manajemen kasir modern yang dibangun dengan bahasa **Go (Golang)**. Proyek ini mendemonstrasikan implementasi **Clean Architecture**, dokumentasi otomatis dengan **Swagger**, serta integrasi **Cloud Database (Supabase)** dan **Cloud Hosting (Railway)**.
 
+Tugas ini merupakan serangkain Program bootcamp Jago Golang - Ariaseta & Umam
+
 ---
 
 ## 🏗️ Arsitektur & Alur Sistem
@@ -36,6 +38,7 @@ SQL
         id SERIAL PRIMARY KEY,
         name VARCHAR(100) NOT NULL
     );
+    ```
 
 * **Tabel Produk dengan Foreign Key**
 ```bash
@@ -46,10 +49,12 @@ SQL
         stock INTEGER NOT NULL,
         category_id INTEGER REFERENCES categories(id) ON DELETE SET NULL
     );
+```
 
 * **Masukkan Data Contoh**
 ```bash
     INSERT INTO categories (name) VALUES ('Elektronik'), ('Makanan');
+```
 
 ---
 
@@ -60,25 +65,27 @@ SQL
     git clone [https://github.com/goprex/crudAPI.git](https://github.com/goprex/crudAPI.git)
     cd crudAPI
     go mod tidy
+```
 
 * **Setup Environment**
 Buat file .env di root folder dan isi dengan link URI Supabase Anda:
 ```bash
     PORT=8080
     DB_CONN=postgres://postgres:[PASSWORD]@db.supabase.co:5432/postgres
+```
 
 * **Generate Swagger & Run:**
 ```bash
     swag init
     go run main.go
-
+```
 
 ---
 
 ## 📖 Langkah 4: Testing API (CURL)
 
 Gunakan perintah ini di terminal (Arch/Linux/Mac) untuk menguji API:
-1. Tambah Produk Baru (POST)
+* **Tambah Produk Baru (POST)**
 ```bash
 curl -X POST http://localhost:8080/api/produk \
      -H "Content-Type: application/json" \
@@ -88,8 +95,9 @@ curl -X POST http://localhost:8080/api/produk \
            "stock": 10,
            "category_id": 1
          }'
+```
 
-2. Update Produk (PUT)
+* **Update Produk (PUT)**
 ```bash
 curl -X PUT http://localhost:8080/api/produk/1 \
      -H "Content-Type: application/json" \
@@ -99,10 +107,12 @@ curl -X PUT http://localhost:8080/api/produk/1 \
            "stock": 5,
            "category_id": 1
          }'
+```
 
-3. Hapus Produk (DELETE)
+* **Hapus Produk (DELETE)**
 ```bash
 curl -X DELETE http://localhost:8080/api/produk/1
+```
 
 ---
 
@@ -128,3 +138,4 @@ curl -X DELETE http://localhost:8080/api/produk/1
    git add README.md
    git commit -m "docs: fix formatting in README"
    git push origin main
+    ```
