@@ -64,7 +64,7 @@ func main() {
 	http.HandleFunc("/api/produk/", productHandler.HandleProductByID)
 
 	addr := "0.0.0.0:" + config.Port
-	fmt.Println("🚀 Server running on", addr)
+	fmt.Println("Server running on", addr)
 
 	log.Fatal(http.ListenAndServe(addr, nil))
 }
