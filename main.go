@@ -13,6 +13,9 @@ import (
 	"crudapi/services"
 
 	"github.com/spf13/viper"
+	_ "crudapi-ku/docs"
+
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
 type Config struct {
