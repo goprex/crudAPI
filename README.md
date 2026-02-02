@@ -24,6 +24,8 @@ Pastikan alat berikut sudah terinstal di komputer Anda:
   ```bash
   go install [github.com/swaggo/swag/cmd/swag@latest](https://github.com/swaggo/swag/cmd/swag@latest)
 
+---
+
 ## 🗄️ Langkah 2: Setup Database (Supabase)
 
 Jalankan script SQL berikut di SQL Editor Supabase Anda untuk membuat tabel dengan relasi:
@@ -49,6 +51,8 @@ CREATE TABLE products (
 ```bash
 INSERT INTO categories (name) VALUES ('Elektronik'), ('Makanan');
 
+---
+
 ## 🚀 Langkah 3: Menjalankan di Lokal
 
 1. Clone & Install:
@@ -66,6 +70,9 @@ INSERT INTO categories (name) VALUES ('Elektronik'), ('Makanan');
 ```bash
     swag init
     go run main.go
+
+
+---
 
 ## 📖 Langkah 4: Testing API (CURL)
 
@@ -95,6 +102,8 @@ curl -X PUT http://localhost:8080/api/produk/1 \
 3. Hapus Produk (DELETE)
 ```bash
 curl -X DELETE http://localhost:8080/api/produk/1
+
+---
 
 ## 📂 Struktur Folder
 
