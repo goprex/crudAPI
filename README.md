@@ -38,7 +38,7 @@ SQL
     );
 
 * **Tabel Produk dengan Foreign Key**
-
+```bash
     CREATE TABLE products (
         id SERIAL PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
@@ -55,18 +55,19 @@ SQL
 
 ## 🚀 Langkah 3: Menjalankan di Lokal
 
-1. Clone & Install:
+* **Clone & Install:**
 ```bash
     git clone [https://github.com/goprex/crudAPI.git](https://github.com/goprex/crudAPI.git)
     cd crudAPI
     go mod tidy
 
-2. Setup Environment: Buat file .env di root folder dan isi dengan link URI Supabase Anda:
+* **Setup Environment**
+Buat file .env di root folder dan isi dengan link URI Supabase Anda:
 ```bash
     PORT=8080
     DB_CONN=postgres://postgres:[PASSWORD]@db.supabase.co:5432/postgres
 
-3. Generate Swagger & Run:
+* **Generate Swagger & Run:**
 ```bash
     swag init
     go run main.go
