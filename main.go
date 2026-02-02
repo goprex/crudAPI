@@ -148,13 +148,22 @@ func main() {
 //	log.Println("Server on http://localhost:8000")
 //	log.Fatal(http.ListenAndServe(":8000", mux))
 
+	// Health check
+	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("OK"))
+	})
+
 	// Setup routes
 	http.HandleFunc("/api/produk", productHandler.HandleProducts)
 	http.HandleFunc("/api/produk/", productHandler.HandleProductByID)
 
-	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("OK"))
-	})
+
+	// Railway-safe PORT
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
 
 	addr := "0.0.0.0:" + config.Port
 	fmt.Println("Server running di", addr)
