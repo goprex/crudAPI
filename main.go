@@ -70,6 +70,7 @@ func main() {
 
 	http.HandleFunc("/api/produk", productHandler.HandleProducts)
 	http.HandleFunc("/api/produk/", productHandler.HandleProductByID)
+    	http.HandleFunc("/docs/", httpSwagger.WrapHandler)
 
 	addr := "0.0.0.0:" + config.Port
 	fmt.Println("Server running on", addr)
