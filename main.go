@@ -2,10 +2,20 @@ package main
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"strconv"
 	"sync"
+	"os"
+	"strings"
+	"fmt"
+	"log"
+
+	"crudapi/database"
+	"crudapi/repositories"
+	"crudapi/services"
+	"crudapi/handlers"
+
+	"github.com/spf13/viper"
 )
 
 type Category struct {
@@ -97,13 +107,57 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+type Config struct {
+	Port string `mapstructure:"PORT"`
+	DBConn string `mapstructure:"DB_CONN"`
+}
+
 func main() {
+	viper.AutomaticEnv()
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".","-"))
+
+	if _, err := os.Stat(".env"); err == nil {
+		viper.SetConfigFile(".env")
+		_ = viper.ReadInConfig()
+	}
+	config := Config {
+		Port: viper.GetString("PORT"),
+		DBConn: viper.GetString("DB_CONN"),
+	}
+
+	//Setup database
+	db, err := database.InitDB(config.DBConn)
+	if err != nil {
+		log.Fatal("Failed to initialize database:", err)
+	}
+	defer db.Close()
+
+	// Dependency Injection
+	productRepo := repositories.NewProductRepository(db)
+	productService := services.NewProductService(productRepo)
+	productHandler := handlers.NewProductHandler(productService)
+
+
+
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /categories", handler)
 	mux.HandleFunc("POST /categories", handler)
 	mux.HandleFunc("GET /categories/{id}", handler)
 	mux.HandleFunc("PUT /categories/{id}", handler)
 	mux.HandleFunc("DELETE /categories/{id}", handler)
-	log.Println("Server on http://localhost:8000")
-	log.Fatal(http.ListenAndServe(":8000", mux))
+//	log.Println("Server on http://localhost:8000")
+//	log.Fatal(http.ListenAndServe(":8000", mux))
+
+	// Setup routes
+	http.HandleFunc("/api/produk", productHandler.HandleProducts)
+	http.HandleFunc("/api/produk/", productHandler.HandleProductByID)
+
+	addr := "0.0.0.0:" + config.Port
+	fmt.Println("Server running di", addr)
+
+	err = http.ListenAndServe(addr, mux)
+	if err != nil {
+		fmt.Println("gagal running server", err)
+	}
+
 }
