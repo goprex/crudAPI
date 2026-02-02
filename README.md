@@ -41,14 +41,14 @@ Aplikasi ini menggunakan relasi One-to-Many antara Kategori dan Produk. Jalankan
     );
 
 2. Tabel Produk dengan Foreign Key ke Kategori
-```bash
-    CREATE TABLE products (
-        id SERIAL PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
-        price NUMERIC(15, 2) NOT NULL,
-        stock INTEGER NOT NULL,
-        category_id INTEGER REFERENCES categories(id) ON DELETE SET NULL
-    );
+    ```bash
+        CREATE TABLE products (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            price NUMERIC(15, 2) NOT NULL,
+            stock INTEGER NOT NULL,
+            category_id INTEGER REFERENCES categories(id) ON DELETE SET NULL
+        );
 
 3. Masukkan Data Contoh
 ```bash
