@@ -40,6 +40,12 @@ func loadConfig() Config {
 	}
 }
 
+// @title           Kasir API Service
+// @version         1.0
+// @description     Dokumentasi API untuk aplikasi Kasir menggunakan Clean Architecture.
+// @host            crudapi-ku.up.railway.app
+// @BasePath        /
+
 func main() {
 	config := loadConfig()
 

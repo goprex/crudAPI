@@ -17,7 +17,14 @@ func NewProductHandler(service *services.ProductService) *ProductHandler {
 	return &ProductHandler{service: service}
 }
 
-// HandleProducts - GET /api/produk
+// HandleProducts - GET/POST /api/produk
+// @Summary      List & Tambah Produk
+// @Description  Endpoint ini bisa menampilkan semua produk (GET) atau menambah produk baru (POST)
+// @Tags         Produk
+// @Accept       json
+// @Produce      json
+// @Success      200  {array}   models.Product
+// @Router       /api/produk [get]
 func (h *ProductHandler) HandleProducts(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
@@ -92,6 +99,16 @@ func (h *ProductHandler) GetByID(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(product)
 }
 
+// Update - PUT /api/produk/{id}
+// @Summary      Update Produk
+// @Description  Mengubah data produk yang sudah ada berdasarkan ID
+// @Tags         Produk
+// @Accept       json
+// @Produce      json
+// @Param        id      path    int             true  "Product ID"
+// @Param        produk  body    models.Product  true  "Data produk yang baru"
+// @Success      200     {object} models.Product
+// @Router       /api/produk/{id} [put]
 func (h *ProductHandler) Update(w http.ResponseWriter, r *http.Request) {
 	idStr := strings.TrimPrefix(r.URL.Path, "/api/produk/")
 	id, err := strconv.Atoi(idStr)
@@ -119,6 +136,13 @@ func (h *ProductHandler) Update(w http.ResponseWriter, r *http.Request) {
 }
 
 // Delete - DELETE /api/produk/{id}
+// @Summary      Hapus Produk
+// @Description  Menghapus data produk dari database berdasarkan ID
+// @Tags         Produk
+// @Produce      json
+// @Param        id   path      int  true  "Product ID"
+// @Success      200  {object}  map[string]string "message: Product deleted successfully"
+// @Router       /api/produk/{id} [delete]
 func (h *ProductHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	idStr := strings.TrimPrefix(r.URL.Path, "/api/produk/")
 	id, err := strconv.Atoi(idStr)

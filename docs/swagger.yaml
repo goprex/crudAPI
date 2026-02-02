@@ -1,0 +1,97 @@
+basePath: /
+definitions:
+  models.Category:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  models.Product:
+    properties:
+      category:
+        $ref: '#/definitions/models.Category'
+      category_id:
+        type: integer
+      id:
+        type: integer
+      name:
+        type: string
+      price:
+        type: integer
+      stock:
+        type: integer
+    type: object
+host: crudapi-ku.up.railway.app
+info:
+  contact: {}
+  description: Dokumentasi API untuk aplikasi Kasir menggunakan Clean Architecture.
+  title: Kasir API Service
+  version: "1.0"
+paths:
+  /api/produk:
+    get:
+      consumes:
+      - application/json
+      description: Endpoint ini bisa menampilkan semua produk (GET) atau menambah
+        produk baru (POST)
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Product'
+            type: array
+      summary: List & Tambah Produk
+      tags:
+      - Produk
+  /api/produk/{id}:
+    delete:
+      description: Menghapus data produk dari database berdasarkan ID
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'message: Product deleted successfully'
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Hapus Produk
+      tags:
+      - Produk
+    put:
+      consumes:
+      - application/json
+      description: Mengubah data produk yang sudah ada berdasarkan ID
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Data produk yang baru
+        in: body
+        name: produk
+        required: true
+        schema:
+          $ref: '#/definitions/models.Product'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Product'
+      summary: Update Produk
+      tags:
+      - Produk
+swagger: "2.0"
