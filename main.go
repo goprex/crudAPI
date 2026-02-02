@@ -139,12 +139,12 @@ func main() {
 
 
 
-	mux := http.NewServeMux()
-	mux.HandleFunc("GET /categories", handler)
-	mux.HandleFunc("POST /categories", handler)
-	mux.HandleFunc("GET /categories/{id}", handler)
-	mux.HandleFunc("PUT /categories/{id}", handler)
-	mux.HandleFunc("DELETE /categories/{id}", handler)
+//	mux := http.NewServeMux()
+//	mux.HandleFunc("GET /categories", handler)
+//	mux.HandleFunc("POST /categories", handler)
+//	mux.HandleFunc("GET /categories/{id}", handler)
+//	mux.HandleFunc("PUT /categories/{id}", handler)
+//	mux.HandleFunc("DELETE /categories/{id}", handler)
 //	log.Println("Server on http://localhost:8000")
 //	log.Fatal(http.ListenAndServe(":8000", mux))
 
@@ -155,7 +155,7 @@ func main() {
 	addr := "0.0.0.0:" + config.Port
 	fmt.Println("Server running di", addr)
 
-	err = http.ListenAndServe(addr, mux)
+	err = http.ListenAndServe(addr, nil)
 	if err != nil {
 		fmt.Println("gagal running server", err)
 	}
