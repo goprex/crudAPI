@@ -38,7 +38,7 @@ CREATE TABLE categories (
 );
 
 2. Tabel Produk dengan Foreign Key
-```bash
+
 CREATE TABLE products (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
