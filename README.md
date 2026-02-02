@@ -28,14 +28,14 @@ Pastikan alat berikut sudah terinstal di komputer Anda:
 
 Jalankan script SQL berikut di SQL Editor Supabase Anda untuk membuat tabel dengan relasi:
 SQL
+1. Tabel Kategori
 ```bash
--- 1. Tabel Kategori
 CREATE TABLE categories (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL
 );
 
--- 2. Tabel Produk dengan Foreign Key
+2. Tabel Produk dengan Foreign Key
 ```bash
 CREATE TABLE products (
     id SERIAL PRIMARY KEY,
@@ -45,7 +45,7 @@ CREATE TABLE products (
     category_id INTEGER REFERENCES categories(id) ON DELETE SET NULL
 );
 
--- 3. Masukkan Data Contoh
+3. Masukkan Data Contoh
 ```bash
 INSERT INTO categories (name) VALUES ('Elektronik'), ('Makanan');
 
