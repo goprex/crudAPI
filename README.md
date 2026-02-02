@@ -47,7 +47,7 @@ CREATE TABLE products (
 -- 3. Masukkan Data Contoh
 INSERT INTO categories (name) VALUES ('Elektronik'), ('Makanan');
 
-🚀 Langkah 3: Menjalankan di Lokal
+## 🚀 Langkah 3: Menjalankan di Lokal
 
     Clone & Install:
     Bash
@@ -68,7 +68,7 @@ INSERT INTO categories (name) VALUES ('Elektronik'), ('Makanan');
     swag init
     go run main.go
 
-📖 Testing API (CURL)
+## 📖 Testing API (CURL)
 
 Gunakan perintah ini di terminal (Arch/Linux/Mac) untuk menguji API:
 1. Tambah Produk Baru (POST)
@@ -85,7 +85,7 @@ curl -X POST http://localhost:8080/api/produk \
 
 2. Update Produk (PUT)
 Bash
-
+```bash
 curl -X PUT http://localhost:8080/api/produk/1 \
      -H "Content-Type: application/json" \
      -d '{
