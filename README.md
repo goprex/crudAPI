@@ -55,6 +55,7 @@ Aplikasi ini menggunakan relasi One-to-Many antara Kategori dan Produk. Jalankan
     INSERT INTO categories (name) VALUES ('Elektronik'), ('Makanan');
 
 
+
 ---
 
 ## 🚀 Langkah 3: Menjalankan di Lokal
