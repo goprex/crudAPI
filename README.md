@@ -30,26 +30,26 @@ Pastikan alat berikut sudah terinstal di komputer Anda:
 
 Jalankan script SQL berikut di SQL Editor Supabase Anda untuk membuat tabel dengan relasi:
 SQL
-1. Tabel Kategori
-```bash
-CREATE TABLE categories (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL
-);
+* **Tabel Kategori**
+    ```bash
+    CREATE TABLE categories (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(100) NOT NULL
+    );
 
-2. Tabel Produk dengan Foreign Key
+* **Tabel Produk dengan Foreign Key**
 
-CREATE TABLE products (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    price NUMERIC(15, 2) NOT NULL,
-    stock INTEGER NOT NULL,
-    category_id INTEGER REFERENCES categories(id) ON DELETE SET NULL
-);
+    CREATE TABLE products (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        price NUMERIC(15, 2) NOT NULL,
+        stock INTEGER NOT NULL,
+        category_id INTEGER REFERENCES categories(id) ON DELETE SET NULL
+    );
 
-3. Masukkan Data Contoh
-```bash
-INSERT INTO categories (name) VALUES ('Elektronik'), ('Makanan');
+* **Masukkan Data Contoh**
+
+    INSERT INTO categories (name) VALUES ('Elektronik'), ('Makanan');
 
 ---
 
