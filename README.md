@@ -33,81 +33,92 @@ Pastikan alat berikut sudah terinstal di komputer Anda:
 
 Aplikasi ini menggunakan relasi One-to-Many antara Kategori dan Produk. Jalankan script SQL berikut di SQL Editor Supabase Anda:
 
--- 1. Tabel Kategori
-CREATE TABLE categories (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL
-);
+1. Tabel Kategori
+  ```bash
+    CREATE TABLE categories (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(100) NOT NULL
+    );
 
--- 2. Tabel Produk dengan Foreign Key ke Kategori
-CREATE TABLE products (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    price NUMERIC(15, 2) NOT NULL,
-    stock INTEGER NOT NULL,
-    category_id INTEGER REFERENCES categories(id) ON DELETE SET NULL
-);
+2. Tabel Produk dengan Foreign Key ke Kategori
+```bash
+    CREATE TABLE products (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        price NUMERIC(15, 2) NOT NULL,
+        stock INTEGER NOT NULL,
+        category_id INTEGER REFERENCES categories(id) ON DELETE SET NULL
+    );
 
--- 3. Masukkan Data Contoh
-INSERT INTO categories (name) VALUES ('Elektronik'), ('Makanan');
+3. Masukkan Data Contoh
+```bash
+    INSERT INTO categories (name) VALUES ('Elektronik'), ('Makanan');
 
 
 ---
 
 ## 🚀 Langkah 3: Menjalankan di Lokal
 
--- 1. Clone & Install
+1. Clone & Install
 
-git clone [https://github.com/goprex/crudAPI.git](https://github.com/goprex/crudAPI.git)
-cd crudAPI
-go mod tidy
+```bash
+    git clone [https://github.com/goprex/crudAPI.git](https://github.com/goprex/crudAPI.git)
+    cd crudAPI
+    go mod tidy
 
--- 2. Setup Environment: Buat file .env di root folder
-PORT=8080
-DB_CONN=postgres://postgres:[PASSWORD_MU]@db.supabase.co:5432/postgres
+2. Setup Environment: Buat file .env di root folder
+```bash
+    PORT=8080
+    DB_CONN=postgres://postgres:[PASSWORD_MU]@db.supabase.co:5432/postgres
 
--- 3. Generate Swagger & Run
-swag init
-go run main.go
+3. Generate Swagger & Run
+```bash
+    swag init
+    go run main.go
 
 Akses dokumentasi di: http://localhost:8080/docs/index.html
 
 ---
 ## ☁️ Langkah 4: Deployment ke Railway (Online)
 
--- 1. Push kode terbaru Anda ke GitHub.
--- 2. Di Railway, pilih New Project > Deploy from GitHub.
--- 3. Pilih repository crudAPI.
--- 4. Atur Variables (PENTING): Masuk ke tab Variables di dashboard Railway, lalu tambahkan:
-DB_CONN: (Isi dengan Link URI Supabase Anda)
-PORT: 8080
+1. Push kode terbaru Anda ke GitHub.
+2. Di Railway, pilih New Project > Deploy from GitHub.
+3. Pilih repository crudAPI.
+4 . Atur Variables (PENTING): Masuk ke tab Variables di dashboard Railway, lalu tambahkan:
+```bash
+    DB_CONN: (Isi dengan Link URI Supabase Anda)
+    PORT: 8080
 
--- 
+--- 
 ## 5. 📖 Testing API (CURL)
 
--- 1. Tambah Produk Baru (POST)
-curl -X POST http://localhost:8080/api/produk \
-     -H "Content-Type: application/json" \
-     -d '{
-           "name": "Mouse Gaming",
-           "price": 250000,
-           "stock": 10,
-           "category_id": 1
-         }'
+1. Tambah Produk Baru (POST)
+```bash
+    curl -X POST http://localhost:8080/api/produk \
+         -H "Content-Type: application/json" \
+         -d '{
+               "name": "Mouse Gaming",
+               "price": 250000,
+               "stock": 10,
+               "category_id": 1
+             }'
 
--- 2. Update Produk (PUT)
-curl -X PUT http://localhost:8080/api/produk/1 \
-     -H "Content-Type: application/json" \
-     -d '{
-           "name": "Mouse Gaming Wireless",
-           "price": 300000,
-           "stock": 5,
-           "category_id": 1
-         }'
+2. Update Produk (PUT)
+```bash
+    curl -X PUT http://localhost:8080/api/produk/1 \
+         -H "Content-Type: application/json" \
+         -d '{
+               "name": "Mouse Gaming Wireless",
+               "price": 300000,
+               "stock": 5,
+               "category_id": 1
+             }'
 
--- 3. Hapus Produk (DELETE)
-curl -X DELETE http://localhost:8080/api/produk/1
+3. Hapus Produk (DELETE)
+```bash
+    curl -X DELETE http://localhost:8080/api/produk/1
 
--- 4. Ambil Semua Produk (GET)
-curl -X GET http://localhost:8080/api/produk
+4. Ambil Semua Produk (GET)
+```bash
+    curl -X GET http://localhost:8080/api/produk
 
