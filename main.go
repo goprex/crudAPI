@@ -36,9 +36,16 @@ func loadConfig() Config {
 		port = "8080" // fallback lokal
 	}
 
+	dbConn := viper.GetString("DB_CONN")
+	if dbConn == "" {
+		log.Fatal("CRITICAL ERROR: DB_CONN is not set in .env or Environment Variable")
+
+	}
+
 	return Config{
 		Port:   port,
-		DBConn: viper.GetString("DB_CONN"),
+		DBConn: dbConn,
+	//	DBConn: viper.GetString("DB_CONN"),
 	}
 }
 
@@ -56,6 +63,11 @@ func main() {
 	if err != nil {
 		log.Fatal("Failed to initialize database:", err)
 	}
+	
+	//
+	db.SetMaxOpenConns(25)
+	db.SetMaxIdleConns(5)
+
 	defer db.Close()
 
 	// Dependency Injection
@@ -64,9 +76,28 @@ func main() {
 	productHandler := handlers.NewProductHandler(productService)
 
 	// Routes
-	http.HandleFunc("/health", func(w http.ResponseWriter, _ *http.Request) {
-		w.Write([]byte("OK"))
-	})
+	//http.HandleFunc("/health", func(w http.ResponseWriter, _ *http.Request) {
+	//	w.Write([]byte("OK"))
+	//})
+
+	// Health Check yang memverifikasi koneksi API dan Database
+   	 http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+        // Cek koneksi ke database
+		err := db.Ping()
+
+		if err != nil {
+		    // Jika database bermasalah, kirim status 503 (Service Unavailable)
+		    w.Header().Set("Content-Type", "application/json")
+		    w.WriteHeader(http.StatusServiceUnavailable)
+		    fmt.Fprintf(w, `{"status": "down", "database": "disconnected", "error": "%s"}`, err.Error())
+		    return
+		}
+
+        	// Jika semua oke, kirim status 200
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(`{"status": "up", "database": "connected", "message": "Everything is Awesome!"}`))
+    	})
 
 	http.HandleFunc("/api/produk", productHandler.HandleProducts)
 	http.HandleFunc("/api/produk/", productHandler.HandleProductByID)

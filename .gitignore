@@ -1,6 +1,6 @@
 # Binaries
 crudapi
-*.exe
+.exe
 
 # Go workspace file
 go.work
@@ -8,3 +8,4 @@ go.work
 # Environment variables
 .env
 vendor/
+/docs
