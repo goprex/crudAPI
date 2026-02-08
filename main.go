@@ -101,7 +101,22 @@ func main() {
 
 	http.HandleFunc("/api/produk", productHandler.HandleProducts)
 	http.HandleFunc("/api/produk/", productHandler.HandleProductByID)
-    	http.HandleFunc("/docs/", httpSwagger.WrapHandler)
+   	http.HandleFunc("/docs/", httpSwagger.WrapHandler)
+
+	// Transaction
+	transactionRepo := repositories.NewTransactionRepository(db)
+	transactionService := services.NewTransactionService(transactionRepo)
+	transactionHandler := handlers.NewTransactionHandler(transactionService)
+
+	http.HandleFunc("/api/checkout", transactionHandler.HandleCheckout) // POST
+
+	// Report Hari ini
+	reportRepo := repositories.NewReportRepository(db)
+	reportService := services.NewReportService(reportRepo)
+	reportHandler := handlers.NewReportHandler(reportService)
+
+	http.HandleFunc("/api/report/hari-ini", reportHandler.GetToday)
+
 
 	addr := "0.0.0.0:" + config.Port
 	fmt.Println("Server running on", addr)

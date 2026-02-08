@@ -14,33 +14,53 @@ func NewProductRepository(db *sql.DB) *ProductRepository {
 	return &ProductRepository{db: db}
 }
 
-func (repo *ProductRepository) GetAll() ([]models.Product, error) {
-	// Kita ambil kolom p (product) dan c (category)
+
+func (repo *ProductRepository) GetAll(name string) ([]models.Product, error) {
 	query := `
-		SELECT p.id, p.name, p.price, p.stock, p.category_id, c.id, c.name 
-		FROM products p
-		INNER JOIN categories c ON p.category_id = c.id`
-		
-	rows, err := repo.db.Query(query)
+	SELECT
+		p.id,
+		p.name,
+		p.price,
+		p.stock,
+		p.category_id,
+		c.id,
+		c.name
+	FROM products p
+	INNER JOIN categories c ON c.id = p.category_id
+	`
+
+	args := []interface{}{}
+
+	if name != "" {
+		query += " WHERE p.name ILIKE $1"
+		args = append(args, "%"+name+"%")
+	}
+
+	rows, err := repo.db.Query(query, args...)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 
-	products := make([]models.Product, 0)
+	products := []models.Product{}
+
 	for rows.Next() {
 		var p models.Product
-		var c models.Category // Variable sementara untuk menampung data kategori
-		
+		var c models.Category
+
 		err := rows.Scan(
-			&p.ID, &p.Name, &p.Price, &p.Stock, &p.CategoryID,
-			&c.ID, &c.Name, // Data kategori masuk ke sini
+			&p.ID,
+			&p.Name,
+			&p.Price,
+			&p.Stock,
+			&p.CategoryID,
+			&c.ID,
+			&c.Name,
 		)
 		if err != nil {
 			return nil, err
 		}
-		
-		// Kita pasangkan kategori ke produk
+
 		p.Category = &c
 		products = append(products, p)
 	}
